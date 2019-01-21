@@ -1,0 +1,102 @@
+﻿@using Clockwork.Web.Models
+@model Clockwork.Web.Models.DataContainer
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CurrentTimeQuery> currentTimeQueries = null;
+}
+
+<script>
+    function UserAction() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("output").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "http://127.0.0.1:5000/api/currenttime", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send();
+
+    }
+</script>
+
+<div class="jumbotron">
+    <h1 class="display-5">AWH Clockwork Project</h1>
+    <p>Running on MVC Version: @ViewData["Version"] / @ViewData["Runtime"]</p>
+
+    <p class="lead">
+        This is my created version of the application being assigned to me as part of the requirements for hiring the most deserving applicant.<br />
+        This page is very responsive and 100% supports mobile platform. To check, just resize the web page.
+    </p>
+</div>
+
+<table id="tblCurrentTimeQuery" class="table table-hover">
+    <thead>
+        <tr class="table-info">
+            <th scope="col">Id</th>
+            <th scope="col">Client IP</th>
+            <th scope="col">Server Time</th>
+            <th scope="col">UTC Time</th>
+            <th scope="col">Timezone</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            currentTimeQueries = (List<CurrentTimeQuery>)Model.Data;
+
+            for (int i = 0; i < currentTimeQueries.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    <tr>
+                        <td>@currentTimeQueries[i].CurrentTimeQueryId</td>
+                        <td>@currentTimeQueries[i].ClientIp</td>
+                        <td>@DateTime.Parse(currentTimeQueries[i].Time)</td>
+                        <td>@DateTime.Parse(currentTimeQueries[i].UTCTime)</td>
+                        <td>@currentTimeQueries[i].Timezone</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="table-active">
+                        <td>@currentTimeQueries[i].CurrentTimeQueryId</td>
+                        <td>@currentTimeQueries[i].ClientIp</td>
+                        <td>@DateTime.Parse(currentTimeQueries[i].Time)</td>
+                        <td>@DateTime.Parse(currentTimeQueries[i].UTCTime)</td>
+                        <td>@currentTimeQueries[i].Timezone</td>
+                    </tr>
+                }
+            }
+        }
+
+    </tbody>
+</table>
+
+<div class="bs-component">
+    <fieldset>
+        <div class="form-group">
+            <select id="cboTimeZone" class="custom-select" width="40%">
+                <option selected="" value="0">---Select Timezones---</option>
+
+                @if (Model != null && Model.QueryTimeZones != null)
+                {
+                    foreach (var tz in Model.QueryTimeZones)
+                    {
+                        <option>@tz.DisplayName</option>
+                    }
+                }
+
+            </select>
+        </div>
+        <button type="button" class="btn btn-info" onclick="AddTimeByTimeZone();">Get the time</button>
+
+    </fieldset>
+</div>
+
+<p id="output"></p>
+
+
