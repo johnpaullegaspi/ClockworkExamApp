@@ -35,7 +35,7 @@ namespace Clockwork.API
                  .AddJsonFile("appsettings.json")
                  .Build();
 
-            // 1) Use SQL Server Database: use below codes
+            // 1) Use SQL Server Database: use below codes  
 
             //var connectionString = configuration.GetConnectionString("ClockWorkDatabase");
             //services.AddDbContext<ClockworkContext>
