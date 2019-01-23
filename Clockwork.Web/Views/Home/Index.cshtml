@@ -20,6 +20,10 @@
         xhttp.send();
 
     }
+
+    $(document).ready(function () {
+        validatePage();
+    })
 </script>
 
 <div class="jumbotron">
@@ -44,7 +48,7 @@
     </thead>
     <tbody>
 
-        @if (Model != null)
+        @if (Model != null && Model.Data != null)
         {
             currentTimeQueries = (List<CurrentTimeQuery>)Model.Data;
 
@@ -98,5 +102,24 @@
 </div>
 
 <p id="output"></p>
+
+<div class="modal" id="divErrorMessage">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Clockwork App</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeMessage();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><div id="errorMessage">@Model.Message</div></p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeMessage();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 

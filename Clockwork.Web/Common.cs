@@ -23,13 +23,13 @@ namespace Clockwork.Web
         /// <returns></returns>
         public static string GetConfigurationValue(string name)
         {
-            string value = ConfigurationManager.AppSettings[name];
+            var value = ConfigurationManager.AppSettings[name];
             return value;
         }
 
         public static string ConvertObjectToJSON(object data)
         {
-            string json = JsonConvert.SerializeObject(data);
+            var json = JsonConvert.SerializeObject(data);
 
             return json;
         }
@@ -45,8 +45,8 @@ namespace Clockwork.Web
         //Convert json into a Typed object DataContainer.
         public static DataContainer GetData<T>(string json)
         {
-            List<string> messageList = new List<string>();
-            DataContainer dataContainer = new DataContainer();
+            var messageList = new List<string>();
+            var dataContainer = new DataContainer();
 
             return ConvertJSONToObject<DataContainer>(json);
         }
@@ -59,7 +59,7 @@ namespace Clockwork.Web
 
         public static string GetParameterStrings(Dictionary<string, string> parametersWithdata)
         {
-            StringBuilder parameterBuilder = new StringBuilder();
+            var parameterBuilder = new StringBuilder();
             int totalData = 0;
             int count = 0;
 
@@ -67,7 +67,7 @@ namespace Clockwork.Web
             {
                 totalData = parametersWithdata.Values.Count;
 
-                foreach (KeyValuePair<string, string> entry in parametersWithdata)
+                foreach (var entry in parametersWithdata)
                 {
                     count++;
 
@@ -98,18 +98,18 @@ namespace Clockwork.Web
         /// <returns></returns>
         public static DataContainer PostDataWithParameters<T>(string url, object objData)
         {
-            string strResult = string.Empty;
-            string normalizedParameters = string.Empty;
+            var strResult = string.Empty;
+            var normalizedParameters = string.Empty;
 
-            string postdata = "{\"data\":" + Common.ConvertObjectToJSON(objData) + "}";
+            var postdata = "{\"data\":" + Common.ConvertObjectToJSON(objData) + "}";
 
-            ASCIIEncoding encoding = new ASCIIEncoding();
+            var encoding = new ASCIIEncoding();
             //*********
             // convert xmlstring to byte using ascii encoding
             byte[] data = encoding.GetBytes(postdata);
 
             // declare httpwebrequet wrt url defined above
-            HttpWebRequest webrequest = (HttpWebRequest)WebRequest.Create(url);
+            var webrequest = (HttpWebRequest)WebRequest.Create(url);
 
             // set method as post
             webrequest.Method = "POST";
@@ -121,17 +121,17 @@ namespace Clockwork.Web
             webrequest.ContentLength = data.Length;
 
             // get stream data out of webrequest object
-            Stream newStream = webrequest.GetRequestStream();
+            var newStream = webrequest.GetRequestStream();
 
             newStream.Write(data, 0, data.Length);
             newStream.Close();
 
             // declare & read response from service
-            HttpWebResponse webresponse = (HttpWebResponse)webrequest.GetResponse();
+            var webresponse = (HttpWebResponse)webrequest.GetResponse();
 
 
             // read response stream from response object
-            StreamReader loResponseStream = new StreamReader(webresponse.GetResponseStream(), Encoding.UTF8);
+            var loResponseStream = new StreamReader(webresponse.GetResponseStream(), Encoding.UTF8);
 
             // read string from stream data
             strResult = loResponseStream.ReadToEnd();
@@ -144,7 +144,7 @@ namespace Clockwork.Web
             webresponse.Close();
             strResult = System.Net.WebUtility.HtmlDecode(strResult);
 
-            DataContainer dataContainer = Common.GetData<T>(strResult);
+            var dataContainer = Common.GetData<T>(strResult);
 
             return dataContainer;
         }
@@ -158,13 +158,13 @@ namespace Clockwork.Web
         /// <returns></returns>
         public static DataContainer GetDataWithParameter<T>(string url, Dictionary<string, string> parametersWithData)
         {
-            string strResult = string.Empty;
-            string normalizedParameters = string.Empty;
+            var strResult = string.Empty;
+            var normalizedParameters = string.Empty;
 
             url = url + Common.GetParameterStrings(parametersWithData);
 
             // declare httpwebrequet wrt url defined above
-            HttpWebRequest webrequest = (HttpWebRequest)WebRequest.Create(url);
+            var webrequest = (HttpWebRequest)WebRequest.Create(url);
 
             // set method as post
             webrequest.Method = "GET";
@@ -173,12 +173,12 @@ namespace Clockwork.Web
             webrequest.ContentType = "application/x-www-form-urlencoded";
 
             // declare & read response from service
-            HttpWebResponse webresponse = (HttpWebResponse)webrequest.GetResponse();
+            var webresponse = (HttpWebResponse)webrequest.GetResponse();
 
             // set utf8 encoding
 
             // read response stream from response object
-            StreamReader loResponseStream = new StreamReader
+            var loResponseStream = new StreamReader
                 (webresponse.GetResponseStream(), Encoding.UTF8);
 
             // read string from stream data
@@ -194,7 +194,7 @@ namespace Clockwork.Web
 
             strResult = System.Net.WebUtility.HtmlDecode(strResult);
 
-            DataContainer dataContainer = Common.GetData<T>(strResult);
+            var dataContainer = Common.GetData<T>(strResult);
 
             return dataContainer;
         }
@@ -214,6 +214,22 @@ namespace Clockwork.Web
             }
 
             return dataContainer;
+        }
+
+        public static string CheckMessage(string message)
+        {
+            var errorMessage = string.Empty;
+
+            if (message.ToLower().Contains("unable to connect"))
+            {
+                errorMessage = "Opss! Something's wrong with the API!";
+            }
+            else
+            {
+                errorMessage = "Error encountered: " + message;
+            }
+
+            return errorMessage;
         }
     }
 }

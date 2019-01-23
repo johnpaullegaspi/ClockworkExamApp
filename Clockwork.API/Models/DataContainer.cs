@@ -15,7 +15,7 @@ namespace Clockwork.API.Models
         /// <summary>
         /// Gets or sets Message of the result
         /// </summary>
-        public List<string> Message { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets the DB data based on query

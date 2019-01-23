@@ -112,6 +112,22 @@ namespace Clockwork.API.Services
 
             return timeZoneInfo;
         }
+
+        public string CheckMessage(string message)
+        {
+            var errorMessage = string.Empty;
+
+            if (message.ToLower().Contains("unable to connect"))
+            {
+                errorMessage = "Opss! Something's wrong with the API!";
+            }
+            else
+            {
+                errorMessage = "Error encountered: " + message;
+            }
+
+            return errorMessage;
+        }
     }
 
 

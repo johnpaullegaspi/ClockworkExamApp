@@ -32,7 +32,8 @@ namespace Clockwork.Web.Controllers
             }
             catch (Exception ex)
             {
-
+                _returnedData = new DataContainer();
+                _returnedData.Message = Common.CheckMessage(ex.Message);
             }
 
             return View(_returnedData);
@@ -42,7 +43,8 @@ namespace Clockwork.Web.Controllers
         public ActionResult AddTimeByTimeZone(string timeZoneId)
         {
 
-            Dictionary<string, string> data = new Dictionary<string, string>();
+            var data = new Dictionary<string, string>();
+
             data.Add("timeZoneId", timeZoneId);
 
             try
@@ -51,9 +53,10 @@ namespace Clockwork.Web.Controllers
             }
             catch (Exception ex)
             {
-
+                _returnedData = new DataContainer();
+                _returnedData.Message = Common.CheckMessage(ex.Message);
             }
-            return Json(_returnedData.Data, JsonRequestBehavior.AllowGet);
+            return Json(_returnedData, JsonRequestBehavior.AllowGet);
         }
 
        

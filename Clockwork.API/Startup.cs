@@ -62,7 +62,6 @@ namespace Clockwork.API
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
-            //app.UseMvc();
 
             app.UseMvc(routes =>
             {

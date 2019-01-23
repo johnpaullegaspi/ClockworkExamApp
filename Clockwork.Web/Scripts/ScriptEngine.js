@@ -8,7 +8,7 @@
         async: false,
         beforeSend: function (xhr) {
 
-           //do cosmetic stuffs here!
+            //do cosmetic stuffs here!
             //hideProgressBar(false);
             //generateProgressBar();
         }
@@ -16,36 +16,36 @@
         .done(function (data) {
 
             //hideProgressBar(true);
-
-            if (data != undefined && data.length > 0) {
+            if (data.Message != undefined && data.Message != "") {
+                showMessage(data.Message);
+            }
+            else if (data != undefined && data.Data.length > 0) {
 
                 $('#tblCurrentTimeQuery > tbody').empty();
 
-                for (i = 0; i < data.length; i++) {
-
+                for (i = 0; i < data.Data.length; i++) {
                     if (i % 2 != 0) {
                         $('#tblCurrentTimeQuery tbody').append(
                             '<tr class=\"table-active\">' +
-                            '<td>' + data[i].CurrentTimeQueryId + '</td>' +
-                            '<td>' + data[i].ClientIp + '</td>' +
-                            '<td>' + formatAMPM(data[i].Time) + '</td>' +
-                            '<td>' + formatAMPM(data[i].UTCTime) + '</td>' +
-                            '<td>' + data[i].Timezone + '</td>' +
+                            '<td>' + data.Data[i].CurrentTimeQueryId + '</td>' +
+                            '<td>' + data.Data[i].ClientIp + '</td>' +
+                            '<td>' + formatAMPM(data.Data[i].Time) + '</td>' +
+                            '<td>' + formatAMPM(data.Data[i].UTCTime) + '</td>' +
+                            '<td>' + data.Data[i].Timezone + '</td>' +
                             '</tr>'
                         );
                     }
                     else {
                         $('#tblCurrentTimeQuery tbody').append(
                             '<tr>' +
-                            '<td>' + data[i].CurrentTimeQueryId + '</td>' +
-                            '<td>' + data[i].ClientIp + '</td>' +
-                            '<td>' + formatAMPM(data[i].Time) + '</td>' +
-                            '<td>' + formatAMPM(data[i].UTCTime) + '</td>' +
-                            '<td>' + data[i].Timezone + '</td>' +
+                            '<td>' + data.Data[i].CurrentTimeQueryId + '</td>' +
+                            '<td>' + data.Data[i].ClientIp + '</td>' +
+                            '<td>' + formatAMPM(data.Data[i].Time) + '</td>' +
+                            '<td>' + formatAMPM(data.Data[i].UTCTime) + '</td>' +
+                            '<td>' + data.Data[i].Timezone + '</td>' +
                             '</tr>'
                         );
                     }
-                    
                 }
             }
         });
@@ -71,4 +71,23 @@ function formatAMPM(queryTime) {
     var time = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
 
     return time;
+}
+
+function closeMessage() {
+    $("#divErrorMessage").hide();
+}
+
+
+function validatePage() {
+    var message = $("#errorMessage").text();
+
+    if (message != "") {
+        $("#divErrorMessage").show();
+    }
+}
+
+function showMessage(message) {
+    $("#errorMessage").empty();
+    $("#errorMessage").append(message);
+    $("#divErrorMessage").show();
 }
