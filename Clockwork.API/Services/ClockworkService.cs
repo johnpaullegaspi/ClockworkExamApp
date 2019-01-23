@@ -45,7 +45,7 @@ namespace Clockwork.API.Services
         public List<CurrentTimeQuery> GetCurrentTimeQueries()
         {
             var currentTimeQueries = new List<CurrentTimeQuery>();
-            ClockworkService clockworkService = new ClockworkService();
+            var clockworkService = new ClockworkService();
 
             using (var db = new ClockworkContext())
             {
@@ -63,9 +63,9 @@ namespace Clockwork.API.Services
         /// <returns>a list of Timezones</returns>
         public List<QueryTimeZone> GetTimeZoneList()
         {
-            ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
+            var timeZones = TimeZoneInfo.GetSystemTimeZones();
 
-            List<QueryTimeZone> timeZoneList = timeZones.Select(
+            var timeZoneList = timeZones.Select(
                 i => new QueryTimeZone()
                 {
                     Id = i.Id,
@@ -84,14 +84,14 @@ namespace Clockwork.API.Services
         /// <returns>Converted Date Time</returns>
         public DateTime GetDateTimeByTimeZone(DateTime serverTime, string timeZoneDisplay)
         {
-            DateTime timezoneDateAndTime = serverTime;
+            var timezoneDateAndTime = serverTime;
 
             if (string.IsNullOrEmpty(timeZoneDisplay) || timeZoneDisplay.ToUpper().Contains("SELECT TIMEZONE"))
             {
                 return timezoneDateAndTime;
             }
 
-            TimeZoneInfo timeZoneInfo = TimeZoneInfo.GetSystemTimeZones().Where(i => i.DisplayName == timeZoneDisplay).FirstOrDefault();
+            var timeZoneInfo = TimeZoneInfo.GetSystemTimeZones().Where(i => i.DisplayName == timeZoneDisplay).FirstOrDefault();
 
             if (timeZoneInfo != null)
             {
@@ -108,7 +108,7 @@ namespace Clockwork.API.Services
         /// <returns>TimeZoneInfo object</returns>
         public TimeZoneInfo GetTimeZoneInfoById(string timeZoneDisplay)
         {
-            TimeZoneInfo timeZoneInfo = TimeZoneInfo.GetSystemTimeZones().Where(i => i.DisplayName == timeZoneDisplay).FirstOrDefault();
+            var timeZoneInfo = TimeZoneInfo.GetSystemTimeZones().Where(i => i.DisplayName == timeZoneDisplay).FirstOrDefault();
 
             return timeZoneInfo;
         }
