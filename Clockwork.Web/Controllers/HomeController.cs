@@ -74,7 +74,12 @@ namespace Clockwork.Web.Controllers
 
         }
 
-       
+        public void NewMethod2()
+        {
+
+        }
+
+
 
     }
 
