@@ -64,6 +64,11 @@ namespace Clockwork.Web.Controllers
             string name = "Hello";
         }
 
+        public void PullRequest()
+        {
+            string name = "Request for pull request.";
+        }
+
     }
 
 }
