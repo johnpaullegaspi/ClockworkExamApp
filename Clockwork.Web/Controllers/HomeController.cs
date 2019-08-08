@@ -69,6 +69,11 @@ namespace Clockwork.Web.Controllers
             string name = "Request for pull request.";
         }
 
+        public void NewBranch()
+        {
+            string name = "new branch.";
+        }
+
     }
 
 }
