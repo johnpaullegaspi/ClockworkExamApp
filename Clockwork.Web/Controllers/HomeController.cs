@@ -69,6 +69,17 @@ namespace Clockwork.Web.Controllers
             string name = "9/8/2019";
         }
 
+        public void NewMethod1()
+        {
+
+        }
+
+        public void NewMethod2()
+        {
+
+        }
+
+
 
     }
 
