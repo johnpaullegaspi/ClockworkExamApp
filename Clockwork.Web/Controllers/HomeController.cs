@@ -59,6 +59,11 @@ namespace Clockwork.Web.Controllers
             return Json(_returnedData, JsonRequestBehavior.AllowGet);
         }
 
-       
+        public void FirstCommit()
+        {
+            string name = "Hello";
+        }
+
     }
+
 }
