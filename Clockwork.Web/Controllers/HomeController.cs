@@ -64,30 +64,6 @@ namespace Clockwork.Web.Controllers
             string name = "Hello";
         }
 
-        public void PullRequest()
-        {
-            string name = "Request for pull request.";
-        }
-
-        public void NewBranch()
-        {
-            string name = "new branch.";
-        }
-
-        public void Sync()
-        {
-            string done = "Done.";
-        }
-
-        public void ThisMethodForPullRequest()
-        {
-
-        }
-
-        public void AnotherOneForPullRequest()
-        {
-
-        }
 
     }
 
