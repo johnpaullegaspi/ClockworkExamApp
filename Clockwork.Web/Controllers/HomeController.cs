@@ -74,6 +74,11 @@ namespace Clockwork.Web.Controllers
             string name = "new branch.";
         }
 
+        public void Sync()
+        {
+            string done = "Done.";
+        }
+
     }
 
 }
